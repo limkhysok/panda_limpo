@@ -1,4 +1,13 @@
 # PANDAS CHEAT SHEET
+# Cleaning → Formatting → Normalization → Encoding
+
+
+# Module 1
+
+
+
+# Module 2
+
 
 ## 1. Reading Files | Import Files
 
@@ -103,8 +112,94 @@
    |  5151   |        |  5151   |  Low           |
    |  5151   |        |  5151   |  Low           |
    |  6295   |        |  6295   |  Low           |
-   bins = np.linspace(min(df['column_name']), max(df['column_name']), 4)
+   bins = np.linspace(min(df['price']), max(df['price']), 4)
    group_names = ['Low', 'Medium', 'High']
-   df['column_name-binned'] = pd.cut(df['column_name'], bins, labels=group_names, include_lowest=True)
+   df['price-binned'] = pd.cut(df['price'], bins, labels=group_names, include_lowest=True)
    
+```
+
+## 10. Dummy Variables
+
+```python
+   |  car  | fuel   |       |  gas  | diesel |
+   |  A    | diesel |       |  1    |  0     |
+   |  A    | gas    |       |  1    |  0     |
+   |  B    | diesel | ===>  |  1    |  0     |
+   |  C    | gas    |       |  0    |  1     |
+   |  C    | diesel |       |  0    |  1     |
+   |  D    | gas    |       |  1    |  0     |
+   |  D    | gas    |       |  1    |  0     |
+   pd.get_dummies(df['fuel'])
+
+```
+
+# Module 3  
+
+## 1. Destriptive Statistics
+
+```python 
+   df.describe()      # to Summarize statistics
+   df.value_count()   # 
+      ex : df['column_name'].value_counts()
+      ex : df['column_name'].value_counts().to_frame()
+      ex : df['column_name'].value_counts().to_frame().rename(columns={'column_name': 'value_counts'}, inplace=True)
+
+   sns.boxplot(x=df['column_name'], y=df['column_name'], data = df)
+    
+    Scatterplot : Example
+        y = df['column_name']
+        x = df['column_name']
+        plt.scatter(x, y)
+
+        plt.title('Scatterplot of column_name vs column_name')
+        plt.xlabel('column_name')
+        plt.ylabel('column_name')
+```
+
+## 2. Groupby in Python
+
+```python
+    df.groupby(['column_name']).mean()
+    df.groupby(['column_name'])['column_name'].mean()
+    df.groupby(['column_name'])['column_name'].max()
+    df.groupby(['column_name'])['column_name'].min()
+    df.groupby(['column_name'])['column_name'].count()
+    df.groupby(['column_name'])['column_name'].value_counts()
+    df.groupby(['column_name'])['column_name'].std()
+    df.groupby(['column_name'])['column_name'].var()
+    df.groupby(['column_name'])['column_name'].median()
+
+    * Example  
+          df_test = df['drive-wheels', 'body-style', 'price']
+          df_group_one = df_test.groupby(['drive-wheels', 'body-style'], as_index=False).mean()
+          df_group_one
+```
+
+## 3. Correlation
+
+```python
+    * corretlation between two features
+
+    * positive  linear relationship
+        sns.regplot(x='column_name', y='column_name', data=df)
+        plt.ylim(0,)
+
+    * negative  linear relationship
+        sns.regplot(x='column_name', y='column_name', data=df)
+        plt.ylim(0,)
+
+    * no linear relationship
+
+    Example : Lung Caner -> Smoking
+              Rain -> umbrella
+```
+
+## 4. Correlation - Statistics
+
+```python
+   * providing heatmap
+   Example : pearon_coef, p_value = stats.pearsonr(df['house_power'], df['price'])
+             Pearson correclation: 0.81
+             P-value: 9.35 e-48
+
 ```
